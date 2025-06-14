@@ -39,7 +39,6 @@ aws s3 cp "${RHCOS_TMP}/rhcos-${RHCOS_VERSION}-x86_64-aws.x86_64.vmdk" "s3://${S
 
 # Import the image as a snapshot
 IMPORT_ID=$(aws ec2 import-snapshot \
-    --region ${AWS_DEFAULT_REGION} \
     --description "rhcos-${RHCOS_VERSION}-x86_64-aws.x86_64" \
     --disk-container "file:///tmp/containers.json" \
     --output text --query 'ImportTaskId')
@@ -66,7 +65,6 @@ SNAPSHOT_ID=$(aws ec2 describe-import-snapshot-tasks --import-task-ids \
 
 # Register the image
 aws ec2 register-image \
-    --region ${AWS_DEFAULT_REGION} \
     --name "rhcos-${RHCOS_VERSION}-x86_64-aws.x86_64" \
     --block-device-mappings \
 "[{\"DeviceName\": \"/dev/xvda\",\"Ebs\":{\"VolumeSize\":16,\"VolumeType\":\"${STORAGE_CLASS}\",\"DeleteOnTermination\":true,\"SnapshotId\":\"${SNAPSHOT_ID}\"}}]" \
