@@ -16,6 +16,12 @@ aws iam create-role --role-name vmimport --assume-role-policy-document "file://t
 # Use role policy template file to create policy file for bucket
 cat role-policy.json | sed "s|amzn-s3-demo-import-bucket|${S3_BUCKET}|g" | sed "s|amzn-s3-demo-export-bucket|${S3_BUCKET}|g" > /tmp/role-policy.json
 
+# Change the S3 ARN if using govcloud or the put-role-policy command will fail
+if aws configure list | grep region | awk '{print $2}' | grep -i gov
+then
+  sed -i 's|arn:aws:s3|arn:aws-us-gov:s3|g' /tmp/role-policy.json
+fi
+
 # Add role policy
 aws iam put-role-policy --role-name vmimport --policy-name vmimport --policy-document "file:///tmp/role-policy.json"
 
