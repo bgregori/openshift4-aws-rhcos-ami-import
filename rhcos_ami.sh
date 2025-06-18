@@ -6,7 +6,7 @@
 #
 RHCOS_VERSION="4.18.1"
 RHCOS_TMP="/tmp"
-S3_BUCKET="dropbox-danclark"
+S3_BUCKET="s3-your-bucket-name-here"
 STORAGE_CLASS="gp3"
 #############################################
 
@@ -16,7 +16,7 @@ pushd "${RHCOS_TMP}"
 # NOTE: Uncomment the curl command if you need to download the disk
 #       This script is assuming that has been done and we are now in the disconnected world
 # Download the RHCOS metal image tarball
-curl -O https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/${RHCOS_VERSION:0:4}/latest/rhcos-${RHCOS_VERSION}-x86_64-aws.x86_64.vmdk.gz
+# curl -O https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/${RHCOS_VERSION:0:4}/latest/rhcos-${RHCOS_VERSION}-x86_64-aws.x86_64.vmdk.gz
 
 # Unpack the RHCOS metal image tarball
 gunzip rhcos-${RHCOS_VERSION}-x86_64-aws.x86_64.vmdk.gz
